@@ -1,0 +1,43 @@
+# NOTES
+# exact camera names are used in transform tree, ros image topics etc.
+# for each camera a *camera-name*.yaml is provided in camera-calibration/
+# if camera is not fisheye: ROS / OpenCV calibration results provided
+# if camera is fisheye: OCamCalib results txt, manually translated to yaml, provided
+
+camera0:
+  name: CameraFrontLeft
+  is_fisheye: false
+
+camera1:
+  name: CameraFrontCenter
+  is_fisheye: false
+
+camera2:
+  name: CameraFrontRight
+  is_fisheye: false
+
+camera3:
+  name: CameraRearCenter
+  is_fisheye: false
+
+camera4:
+  name: CameraTopViewLeft
+  is_fisheye: true
+
+camera5:
+  name: CameraTopViewFront
+  is_fisheye: true
+
+camera6:
+  name: CameraTopViewRight
+  is_fisheye: true
+
+camera7:
+  name: CameraTopViewRear
+  is_fisheye: true
+
+
+# OPTIONAL: ros camera topics namespace if launched in vehicle
+# if not provided, default is assumed in VehicleRtspServerNode
+camera_topics_namespace: /Vehicle/Video
+camera_image_name: /image_raw

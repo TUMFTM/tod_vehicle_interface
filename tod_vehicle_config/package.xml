@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>tod_vehicle_config</name>
+  <version>1.0.0</version>
+  <description>The tod_vehicle_config package</description>
+
+  <maintainer email="feiler@ftm.mw.tum.de">Johannes Feiler</maintainer>
+  <maintainer email="hoffmann@ftm.mw.tum.de">Simon Hoffmann</maintainer>
+  <maintainer email="majstorovic@ftm.mw.tum.de">Domagoj Majstorovic</maintainer>
+  <maintainer email="andreas.schimpe@tum.de">Andreas Schimpe</maintainer>
+
+  <license>LGPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <exec_depend>roscpp</exec_depend>
+
+  <export>
+  </export>
+</package>
