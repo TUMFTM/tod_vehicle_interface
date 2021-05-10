@@ -4,13 +4,13 @@ project(tod_vehicle_config)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_compile_options(-std=c++17)
 
-find_package(catkin REQUIRED COMPONENTS)
+find_package(catkin REQUIRED)
 
 catkin_package(
-    INCLUDE_DIRS # include
-    #  LIBRARIES tod_vehicle_config
-    CATKIN_DEPENDS # roscpp
-    #  DEPENDS system_lib
+    INCLUDE_DIRS
+    LIBRARIES
+    CATKIN_DEPENDS
+    DEPENDS
     )
 
 install(DIRECTORY

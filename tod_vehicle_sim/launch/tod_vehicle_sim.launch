@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+
+<arg name="vehicleID" default="tum-q7"/>
+
+<group ns="/Vehicle">
+    <node name="VehicleSim" pkg="tod_vehicle_sim" type="VehicleSimNode" output="screen">
+        <rosparam command="load" file="$(find tod_vehicle_config)/vehicle_config/$(arg vehicleID)/vehicle-params.yaml" />
+        <remap from="primary_control_cmd" to="/Vehicle/VehicleBridge/primary_control_cmd"/>
+        <remap from="secondary_control_cmd" to="/Vehicle/CommandCreation/secondary_control_cmd"/>
+        <remap from="odometry" to="/Vehicle/VehicleBridge/odometry"/>
+        <remap from="vehicle_data" to="/Vehicle/VehicleBridge/vehicle_data"/>
+    </node>
+</group>
+</launch>

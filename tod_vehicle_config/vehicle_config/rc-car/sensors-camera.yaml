@@ -1,0 +1,12 @@
+camera0:
+  name: /left
+  is_fisheye: false
+  project_on: true
+
+camera1:
+  name: /right
+  is_fisheye: false
+  project_on: true
+
+camera_topics_namespace: /zed2/zed_node
+camera_image_name: /image_rect_color

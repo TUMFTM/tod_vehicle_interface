@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="isVehicle" default="false"/>
+    <arg name="isOperator" default="false"/>
+    <arg name="vehicleID" default="tum-q7"/>
+
+    <!--OPERATOR NODES-->
+    <group ns="/Operator/VehicleBridge" if="$(eval isOperator)">
+        <node name="VehicleDataReceiver" pkg="tod_vehicle_bridge" type="VehicleDataReceiver" output="screen">
+            <remap from="/received_topic" to="vehicle_data"/>
+        </node>
+
+        <node name="GPSReceiver" pkg="tod_vehicle_bridge" type="GPSReceiver" output="screen">
+            <remap from="/received_topic" to="gps/fix"/>
+        </node>
+
+        <node name="OdometryReceiver" pkg="tod_vehicle_bridge" type="OdometryReceiver" output="screen">
+            <remap from="/received_topic" to="odometry"/>
+        </node>
+    </group>
+
+    <!-- VEHICLE NODES-->
+    <group ns="/Vehicle/VehicleBridge" if="$(eval isVehicle)">
+
+        <node name="VehicleDataSender" pkg="tod_vehicle_bridge" type="VehicleDataSender" output="screen">
+            <remap from="/topic_to_send" to="vehicle_data"/>
+            <remap from="/status_msg" to="/Vehicle/Manager/status_msg"/>
+        </node>
+
+        <node name="GPSSender" pkg="tod_vehicle_bridge" type="GPSSender" output="screen">
+            <remap from="/topic_to_send" to="gps/fix"/>
+            <remap from="/status_msg" to="/Vehicle/Manager/status_msg"/>
+        </node>
+
+        <node name="OdometrySender" pkg="tod_vehicle_bridge" type="OdometrySender" output="screen">
+            <remap from="/topic_to_send" to="odometry"/>
+            <remap from="/status_msg" to="/Vehicle/Manager/status_msg"/>
+        </node>
+
+        <node name="ControlCommandMultiplexer" pkg="tod_vehicle_bridge" type="ControlCommandMultiplexer">
+            <remap from="status_msg" to="/Vehicle/Manager/status_msg"/>
+            <remap from="mux_output" to="/Vehicle/VehicleBridge/primary_control_cmd"/>
+            <remap from="direct_control" to="/Vehicle/DirectControl/primary_control_cmd"/>
+        </node>
+    </group>
+</launch>

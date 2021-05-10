@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <group ns="/Vehicle/Lidar">
+        <node name="RepublishFront" pkg="topic_tools" type="relay" args="/scan /Vehicle/Lidar/laser_model/scan"/>
+    </group>
+
+    <group ns="/Vehicle/VehicleBridge">
+        <node name="DataFromRCCar" pkg="tod_rc-car_bridge" type="VehicleDataFromRCCar" output="screen"/>
+        <node name="CommandToRCCar" pkg="tod_rc-car_bridge" type="VehicleCommandToRCCar"/>
+        <node name="RepublishOdom" pkg="topic_tools" type="relay" args="/vesc/odom /Vehicle/VehicleBridge/odometry"/>
+    </group>
+</launch>
