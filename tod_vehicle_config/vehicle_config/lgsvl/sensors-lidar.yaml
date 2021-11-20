@@ -1,0 +1,8 @@
+lidar0:
+  name: /LidarFront
+  is_3D: false
+  construct_gridmap_from: true
+  detect_on: true
+
+lidar_topics_namespace: /Vehicle/Lidar
+laser_scan_name: /scan

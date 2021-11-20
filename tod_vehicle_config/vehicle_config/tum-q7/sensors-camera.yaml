@@ -5,7 +5,6 @@ camera0:
   scalings: [0p250, 0p500, 1p000]
   transition_bitrates: [300, 650, 6000]
 
-
 camera1:
   name: /CameraFrontCenter
   is_fisheye: false
@@ -21,30 +20,24 @@ camera2:
   transition_bitrates: [300, 650, 6000]
 
 camera3:
-  name: /CameraRearCenter
-  is_fisheye: false
-  scalings: [0p125, 0p250, 0p500]
-  transition_bitrates: [400, 1800, 4000]
-
-camera4:
   name: /CameraTopViewLeft
   is_fisheye: true
   scalings: [0p250, 0p375, 0p500]
   transition_bitrates: [150, 400, 3000]
 
-camera5:
+camera4:
   name: /CameraTopViewFront
   is_fisheye: true
   scalings: [0p250, 0p375, 0p500]
   transition_bitrates: [150, 400, 3000]
 
-camera6:
+camera5:
   name: /CameraTopViewRight
   is_fisheye: true
   scalings: [0p250, 0p375, 0p500]
   transition_bitrates: [150, 400, 3000]
 
-camera7:
+camera6:
   name: /CameraTopViewRear
   is_fisheye: true
   scalings: [0p250, 0p375, 0p500]

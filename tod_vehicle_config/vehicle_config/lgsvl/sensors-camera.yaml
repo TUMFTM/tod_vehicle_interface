@@ -1,0 +1,14 @@
+camera0:
+  name: /CameraFrontLeft
+  is_fisheye: false
+
+camera1:
+  name: /CameraFrontCenter
+  is_fisheye: false
+
+camera2:
+  name: /CameraFrontRight
+  is_fisheye: false
+
+camera_topics_namespace: /Vehicle/Video
+camera_image_name: /image_raw

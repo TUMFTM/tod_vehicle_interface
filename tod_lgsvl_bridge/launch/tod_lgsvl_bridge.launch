@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ROS-Bridge node for Simulator connection -->
+
+    <group ns="Simulation">
+
+        <!-- Re-publishing simulator/camera_node/image/compressed topic to /image_raw as expected by Autoware -->
+        <node name="ConvertImageRawCenter" type="republish" pkg="image_transport" output="screen"
+              args="compressed in:=/Simulation/Video/CameraFrontCenter raw out:=/Vehicle/Video/CameraFrontCenter/image_raw"/>
+        <node name="ConvertImageRawLeft" type="republish" pkg="image_transport" output="screen"
+              args="compressed in:=/Simulation/Video/CameraFrontLeft raw out:=/Vehicle/Video/CameraFrontLeft/image_raw"/>
+        <node name="ConvertImageRawRight" type="republish" pkg="image_transport" output="screen"
+              args="compressed in:=/Simulation/Video/CameraFrontRight raw out:=/Vehicle/Video/CameraFrontRight/image_raw"/>
+
+        <node name="VehicleCommandToLGSVL" pkg="tod_lgsvl_bridge" type="VehicleCommandToLGSVL" output="screen">
+            <remap from="primary_control_cmd" to="/Vehicle/VehicleBridge/primary_control_cmd"/>
+        </node>
+
+        <node name="VehicleDataFromLGSVL" pkg="tod_lgsvl_bridge" type="VehicleDataFromLGSVL" output="screen">
+            <rosparam command="load" file="$(find tod_vehicle_config)/vehicle_config/lgsvl/vehicle-params.yaml" />
+            <remap from="vehicle_data" to="/Vehicle/VehicleBridge/vehicle_data"/>
+            <remap from="gps/fix" to="/Vehicle/VehicleBridge/gps/fix"/>
+        </node>
+
+        <node name="SafetyDriverStatusPublisher" pkg="tod_lgsvl_bridge" type="SafetyDriverStatusPublisher"
+              output="screen">
+            <remap from="safety_driver_status" to="/Vehicle/VehicleBridge/safety_driver_status"/>
+        </node>
+
+        <node name="PointCloud2LaserScan" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node"
+              output="screen">
+            <remap from="cloud_in" to="/Simulation/Lidar/LidarFront/point_cloud"/>
+            <remap from="scan" to="/Vehicle/Lidar/LidarFront/scan"/>
+            <param name="min_height" value="-0.5"/>
+            <param name="max_height" value="0.5"/>
+            <param name="angle_min" value="-1.5708"/>
+            <param name="angle_max" value="1.5708"/>
+            <param name="scan_time" value="0.1"/>
+            <param name="range_min" value="0.45"/>
+            <param name="range_max" value="99"/>
+        </node>
+        <node name="OdometryOffset" pkg="tod_lgsvl_bridge" type="OdometryOffset" output="screen">
+            <remap from="odometry_in" to="/Simulation/odometry"/>
+            <remap from="odometry_out" to="/Vehicle/VehicleBridge/odometry"/>
+        </node>
+
+        <node name="websocket_bridge" pkg="rosbridge_server" type="rosbridge_websocket" output="screen"
+              clear_params="true" required="true">
+            <remap from="/vehicle_cmd" to="vehicle_cmd"/>
+            <remap from="/canbus" to="/Simulation/canbus"/>
+            <remap from="/odom" to="odom"/>
+        </node>
+    </group>
+</launch>

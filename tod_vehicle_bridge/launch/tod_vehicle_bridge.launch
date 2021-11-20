@@ -6,9 +6,7 @@
 
     <!--OPERATOR NODES-->
     <group ns="/Operator/VehicleBridge" if="$(eval isOperator)">
-        <node name="VehicleDataReceiver" pkg="tod_vehicle_bridge" type="VehicleDataReceiver" output="screen">
-            <remap from="/received_topic" to="vehicle_data"/>
-        </node>
+        <node name="VehicleDataReceiver" pkg="tod_vehicle_bridge" type="VehicleDataReceiver" output="screen"/>
 
         <node name="GPSReceiver" pkg="tod_vehicle_bridge" type="GPSReceiver" output="screen">
             <remap from="/received_topic" to="gps/fix"/>
@@ -21,11 +19,7 @@
 
     <!-- VEHICLE NODES-->
     <group ns="/Vehicle/VehicleBridge" if="$(eval isVehicle)">
-
-        <node name="VehicleDataSender" pkg="tod_vehicle_bridge" type="VehicleDataSender" output="screen">
-            <remap from="/topic_to_send" to="vehicle_data"/>
-            <remap from="/status_msg" to="/Vehicle/Manager/status_msg"/>
-        </node>
+        <node name="VehicleDataSender" pkg="tod_vehicle_bridge" type="VehicleDataSender" output="screen"/>
 
         <node name="GPSSender" pkg="tod_vehicle_bridge" type="GPSSender" output="screen">
             <remap from="/topic_to_send" to="gps/fix"/>

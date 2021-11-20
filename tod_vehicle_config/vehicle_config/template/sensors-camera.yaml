@@ -5,7 +5,9 @@
 #             false (xpecting ocam toolbox calibration results)
 
 # OPTIONAL:
+# stream_on_connect: true (default)/false
 # project_on: false (default)/true        (currently only supported for non is_fisheye)
+# is_jpeg: false (default)/true
 # scalings: [1p000]                       (default - for video quality models)
 # transition_bitrates: [10000]            (default - for video quality models)
 # camera_topics_namespace: /Vehicle/Video (default)
@@ -15,6 +17,7 @@
 camera0:
   name: /CameraFrontCenter
   is_fisheye: false
+  stream_on_connect: true
   project_on: true
   scalings: [0p500, 1p000]
   transition_bitrates: [5000, 10000]

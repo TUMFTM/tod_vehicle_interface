@@ -1,0 +1,249 @@
+[
+  {
+    "type": "GPS Device",
+    "name": "GPS",
+    "params": {
+      "Frequency": 12.5,
+      "Topic": "/Simulation/gps/nmea_sentence",
+      "Frame": "gps",
+      "IgnoreMapOrigin": false
+    },
+    "transform": {
+      "x": 0.071,
+      "y": 1.185,
+      "z": -1.657,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    }
+  },
+  {
+    "type": "GPS Odometry",
+    "name": "GPS Odometry",
+    "params": {
+      "Frequency": 12.5,
+      "Topic": "/Simulation/odometry",
+      "Frame": "ftm",
+      "ChildFrame": "base_footprint",
+      "IgnoreMapOrigin": false
+    },
+    "transform": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    }
+  },
+  {
+    "type": "IMU",
+    "name": "IMU",
+    "params": {
+      "Topic": "/Vehicle/VehicleBridge/imu/data",
+      "Frame": "gps"
+    },
+    "transform": {
+      "x": 0.071,
+      "y": 1.185,
+      "z": -1.657,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    }
+  },
+  {
+    "type": "Lidar",
+    "name": "Lidar",
+    "params": {
+      "LaserCount": 1,
+      "MinDistance": 0.5,
+      "MaxDistance": 100,
+      "RotationFrequency": 10,
+      "MeasurementsPerRotation": 360,
+      "FieldOfView": 2,
+      "CenterAngle": 0,
+      "Compensated": true,
+      "PointColor": "#ff000000",
+      "Topic": "/Simulation/Lidar/LidarFront",
+      "Frame": "LidarFront"
+    },
+    "transform": {
+      "x": 0,
+      "y": 0.504,
+      "z": 2.564,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 180
+    }
+  },
+  {
+    "type": "Color Camera",
+    "name": "FrontCenter",
+    "params": {
+      "Width": 1200,
+      "Height": 900,
+      "Frequency": 40,
+      "JpegQuality": 30,
+      "FieldOfView": 80,
+      "MinDistance": 0.1,
+      "MaxDistance": 200,
+      "Topic": "/Simulation/Video/CameraFrontCenter/compressed",
+      "Frame": "CameraFrontCenter"
+    },
+    "transform": {
+      "x": 0,
+      "y": 1.787,
+      "z": 0.13,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    }
+  },
+  {
+    "type": "Color Camera",
+    "name": "FrontLeft",
+    "params": {
+      "Width": 800,
+      "Height": 600,
+      "Frequency": 40,
+      "JpegQuality": 30,
+      "FieldOfView": 80,
+      "MinDistance": 0.1,
+      "MaxDistance": 200,
+      "Topic": "/Simulation/Video/CameraFrontLeft/compressed",
+      "Frame": "CameraFrontLeft"
+    },
+    "transform": {
+      "x": -0.294,
+      "y": 1.787,
+      "z": 0.19,
+      "pitch": 0,
+      "yaw": -73.38,
+      "roll": 0
+    }
+  },
+  {
+    "type": "Color Camera",
+    "name": "FrontRight",
+    "params": {
+      "Width": 800,
+      "Height": 600,
+      "Frequency": 40,
+      "JpegQuality": 30,
+      "FieldOfView": 80,
+      "MinDistance": 0.1,
+      "MaxDistance": 200,
+      "Topic": "/Simulation/Video/CameraFrontRight/compressed",
+      "Frame": "CameraFrontRight"
+    },
+    "transform": {
+      "x": 0.29,
+      "y": 1.787,
+      "z": 0.18,
+      "pitch": 0,
+      "yaw": 76.158,
+      "roll": 0
+    }
+  },
+  {
+    "type": "Color Camera",
+    "name": "CameraTopViewFront",
+    "params": {
+      "Width": 800,
+      "Height": 600,
+      "Frequency": 40,
+      "JpegQuality": 30,
+      "FieldOfView": 140,
+      "MinDistance": 0.1,
+      "MaxDistance": 200,
+      "Topic": "/Simulation/Video/CameraTopViewFront/compressed",
+      "Frame": "CameraTopViewFront"
+    },
+    "transform": {
+      "x": 0.0,
+      "y": 0.657,
+      "z": 2.619,
+      "pitch": 0,
+      "yaw": 0,
+      "roll": 0
+    }
+  },
+  {
+    "type": "Color Camera",
+    "name": "CameraTopViewLeft",
+    "params": {
+      "Width": 800,
+      "Height": 600,
+      "Frequency": 40,
+      "JpegQuality": 30,
+      "FieldOfView": 140,
+      "MinDistance": 0.1,
+      "MaxDistance": 200,
+      "Topic": "/Simulation/Video/CameraTopViewLeft/compressed",
+      "Frame": "CameraTopViewLeft"
+    },
+    "transform": {
+      "x": -0.901,
+      "y": 1.00,
+      "z": 0.581,
+      "pitch": 0,
+      "yaw": -90,
+      "roll": 0
+    }
+  },
+  {
+    "type": "Color Camera",
+    "name": "CameraTopViewRight",
+    "params": {
+      "Width": 800,
+      "Height": 600,
+      "Frequency": 40,
+      "JpegQuality": 30,
+      "FieldOfView": 140,
+      "MinDistance": 0.1,
+      "MaxDistance": 200,
+      "Topic": "/Simulation/Video/CameraTopViewRight/compressed",
+      "Frame": "CameraTopViewRight"
+    },
+    "transform": {
+      "x": 0.900,
+      "y": 1.00,
+      "z": 0.581,
+      "pitch": 0,
+      "yaw": 90,
+      "roll": 0
+    }
+  },
+    {
+    "type": "Keyboard Control",
+    "name": "Keyboard Car Control"
+  },
+  {
+    "type": "Wheel Control",
+    "name": "Wheel Car Control"
+  },
+  {
+      "name": "CAN Bus",
+      "params": {
+          "Frequency": 10,
+          "Topic": "/canbus"
+      },
+      "transform": {
+          "pitch": 0,
+          "roll": 0,
+          "x": 0,
+          "y": 0,
+          "yaw": 0,
+          "z": 0
+      },
+      "type": "CAN-Bus"
+  },
+  {
+    "type": "Vehicle Control",
+    "name": "Autoware Car Control",
+    "params": {
+      "Topic": "/vehicle_cmd"
+    }
+  }
+]

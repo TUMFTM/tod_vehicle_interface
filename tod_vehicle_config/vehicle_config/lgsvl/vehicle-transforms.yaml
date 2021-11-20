@@ -1,0 +1,29 @@
+Transform0:
+  from: "base_rearlink" # lgsvl origin
+  to: "base_footprint"
+  translation_x_y_z: [1.395, 0.0, 0.0]
+  rotation_yaw_pitch_roll: [0.0, 0.0, 0.0]
+
+Transform1:
+  from: "base_footprint"
+  to: "LidarFront"
+  translation_x_y_z: [2.578, 0.0, 0.504]
+  rotation_yaw_pitch_roll: [0.0, 0.0, 3.1415]
+
+Transform2:
+  from: "LidarFront"
+  to: "CameraFrontCenter"
+  translation_x_y_z: [-2.372, -0.000, -1.283]
+  rotation_yaw_pitch_roll: [1.5708, 0.015, 1.5708]
+
+Transform3:
+  from: "LidarFront"
+  to: "CameraFrontLeft"
+  translation_x_y_z: [-2.372, -0.29, -1.283]
+  rotation_yaw_pitch_roll: [0.2730, 0.0, 1.5708]
+
+Transform4:
+  from: "LidarFront"
+  to: "CameraFrontRight"
+  translation_x_y_z: [-2.372, 0.29, -1.283]
+  rotation_yaw_pitch_roll: [2.8685, 0.0, 1.5708]

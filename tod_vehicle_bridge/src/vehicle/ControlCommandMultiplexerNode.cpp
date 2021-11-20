@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
     listOfSubscribers.push_back(nodeHandle.subscribe("status_msg", 1, callback_status));
     listOfSubscribers.push_back(nodeHandle.subscribe(
         "direct_control", 1, callback_direct_control));
+
     _pubControlMsg = nodeHandle.advertise<tod_msgs::PrimaryControlCmd>("mux_output", 1);
     ros::spin();
     return 0;

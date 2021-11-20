@@ -5,11 +5,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_compile_options(-std=c++17)
 
 find_package(catkin REQUIRED COMPONENTS
-    roscpp nav_msgs tf2 tf2_ros tod_msgs tod_helper_functions)
+    roscpp nav_msgs tf2 tod_msgs tod_helper)
 
 catkin_package(
     INCLUDE_DIRS # include
-    CATKIN_DEPENDS roscpp nav_msgs tf2 tf2_ros tod_msgs tod_helper_functions
+    CATKIN_DEPENDS roscpp nav_msgs tf2 tod_msgs tod_helper
     )
 
 include_directories(${catkin_INCLUDE_DIRS})
