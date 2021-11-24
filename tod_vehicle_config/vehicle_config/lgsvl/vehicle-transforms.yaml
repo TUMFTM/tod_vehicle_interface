@@ -1,8 +1,8 @@
 Transform0:
-  from: "base_rearlink" # lgsvl origin
-  to: "base_footprint"
-  translation_x_y_z: [1.395, 0.0, 0.0]
-  rotation_yaw_pitch_roll: [0.0, 0.0, 0.0]
+  from: "base_footprint"
+  to: "rear_axle_footprint" # lgsvl origin
+  translation_x_y_z: [-1.395, 0.0, 0.0]
+  rotation_yaw_pitch_roll: [0.0, 0.0, 0.0] 
 
 Transform1:
   from: "base_footprint"
