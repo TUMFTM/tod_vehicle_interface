@@ -1,0 +1,37 @@
+<launch>
+
+
+  <!-- Parameter aus File laden -->
+  <rosparam command="load" file="/home/ftm/Desktop/tof/ros/config/Eigenstaendig/GPS.yaml" />
+
+  <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+  <!-- Erste EKF Node: Konti -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_odom" clear_params="true" />
+       
+  <!-- Zweite EKF Node: Diskret -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_map" clear_params="true">
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+  </node>
+  
+  <!-- Navsat-Trafo -->
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" output="screen">
+
+    <remap from="/imu/data" to="/rt3003/imu" />
+    <remap from="/gps/fix" to="/rt3003/fix" />
+    <remap from="/odometry/filtered" to="/odometry/filtered_map" />
+
+  </node>
+
+  <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+  <!-- Visualisierung -->
+  <node type="rviz" name="rvizGPS" pkg="rviz" args="-d /home/ftm/Desktop/tof/ros/config/GPS_EKF_localization.rviz" />
+  <include file="/home/ftm/Desktop/tof/ros/launch/Rviz_Karte2.launch"/>
+
+
+  <!--Aufzeichnen eines rosbags -->
+  <arg name="Bag_Nr" default="0" />
+  <node pkg="rosbag" type="record" name="Aufzeichnen" args="/odometry/filtered_map /odometry/gps -O /home/ftm/Desktop/tof/ros/scripts/bagfiles/Vergleich/4GPS_Bag$(arg Bag_Nr)" required="false"/> 
+
+</launch>

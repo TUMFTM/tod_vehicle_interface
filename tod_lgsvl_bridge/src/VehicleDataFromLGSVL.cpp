@@ -5,8 +5,9 @@
 #include "lgsvl_msgs/CanBusData.h"
 #include "autoware_msgs/VehicleCmd.h"
 #include "sensor_msgs/NavSatFix.h"
+#include "tod_core/VehicleParameters.h"
 
-// TODO: Refactor this mapping.
+static std::unique_ptr<tod_core::VehicleParameters> params;
 enum gearMap {
     NEUTRAL = 0,
     DRIVE = 1,
@@ -15,14 +16,11 @@ enum gearMap {
     LOW = 4
 };
 
-float _maxSWA{0};
 
 ros::Publisher vehicleDataMsgPub, gpsMsgPub;
 
 void callback_command(const lgsvl_msgs::CanBusDataConstPtr &msg) {
-
     tod_msgs::VehicleData vehicleData;
-
     std::vector<int> indicator{static_cast<int>(msg->left_turn_signal_active),
                                static_cast<int>(msg->right_turn_signal_active),
                                static_cast<int>(msg->hazard_lights_active)};
@@ -34,7 +32,6 @@ void callback_command(const lgsvl_msgs::CanBusDataConstPtr &msg) {
     else
         vehicleData.indicator = 0;
 
-    // TODO: Refactor.
     switch (msg->selected_gear) {
         case 0:
             vehicleData.gearPosition = 2;
@@ -61,7 +58,7 @@ void callback_command(const lgsvl_msgs::CanBusDataConstPtr &msg) {
     vehicleData.headLight = static_cast<int>(msg->high_beams_active);
     vehicleData.flashLight = static_cast<int>(msg->low_beams_active);
     vehicleData.longitudinalSpeed = msg->speed_mps;
-    vehicleData.steeringWheelAngle = -_maxSWA * msg->steer_pct;
+    vehicleData.steeringWheelAngle = -params->get_max_swa_rad() * msg->steer_pct;
     vehicleData.header.stamp = ros::Time::now();
     vehicleDataMsgPub.publish(vehicleData);
 
@@ -81,10 +78,15 @@ int main(int argc, char **argv) {
     vehicleDataMsgPub = n.advertise<tod_msgs::VehicleData>("vehicle_data", 1);
     gpsMsgPub = n.advertise<sensor_msgs::NavSatFix>("gps/fix", 1);
     std::string _nodeName = ros::this_node::getName();
-    if (!n.getParam(_nodeName + "/maximum_steering_wheel_angle", _maxSWA))
-        ROS_ERROR("%s: Missing vehicle parameter!", _nodeName.c_str());
+    params = std::make_unique<tod_core::VehicleParameters>(n);
 
-
-    ros::spin();
+    ros::Rate r(100);
+    while (ros::ok()) {
+        if (params->vehicle_id_has_changed()) {
+            params->load_parameters();
+        }
+        ros::spin();
+        r.sleep();
+    }
     return 0;
 }

@@ -12,6 +12,12 @@
 # transition_bitrates: [10000]            (default - for video quality models)
 # camera_topics_namespace: /Vehicle/Video (default)
 # camera_image_name: /image_raw           (default)
+# vehicle_name: /camera_front             if camera names differ on vehicle and operator side, instead
+# operator_name: /CameraFrontCenter       of specifying "name", individual names can be used
+#                                         (Dont specify "name" in this case)
+# ip_offset: 19                           If vehicle ip is 192.168.126.1 -> RTSP stream will in this case
+#                                         be accessed from 192.168.126.19
+# host: sensor_ecu                        Will only start if Hostname of current ECU equals "host"
 
 
 camera0:

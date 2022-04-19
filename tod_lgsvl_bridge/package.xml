@@ -17,6 +17,7 @@
 <build_depend>lgsvl_msgs</build_depend>
 <build_depend>tod_vehicle_config</build_depend>
 <build_depend>tod_network</build_depend>
+<build_depend>tod_core</build_depend>
 <build_depend>autoware_msgs</build_depend>
 
 

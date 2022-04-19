@@ -15,13 +15,13 @@ bool invertY = false;
 bool firstOdometryCallback{true};
 
 void odometry_callback(const nav_msgs::Odometry& in) {
-    if(firstOdometryCallback){
+    if (firstOdometryCallback) {
         offsetX = in.pose.pose.position.x;
         offsetY = in.pose.pose.position.y;
         offsetZ = in.pose.pose.position.z;
         firstOdometryCallback = false;
     }
-    
+
     nav_msgs::Odometry out;
     out = in;
     out.pose.pose.position.x = in.pose.pose.position.x -offsetX + userOffsetX;
@@ -31,7 +31,7 @@ void odometry_callback(const nav_msgs::Odometry& in) {
         out.pose.pose.position.y = in.pose.pose.position.y -offsetY + userOffsetY;
     out.header.stamp = ros::Time::now();
     out.header.frame_id = "ftm";
-    odometryPub.publish(out); 
+    odometryPub.publish(out);
 }
 
 int main(int argc, char **argv) {
@@ -50,9 +50,9 @@ int main(int argc, char **argv) {
     if (!n.getParam(ros::this_node::getName() + "/userOffsetZ", userOffsetZ))
         ROS_DEBUG("%s: Could not get parameter - using %f",
                 ros::this_node::getName().c_str(), userOffsetZ);
-    
+
     if (!n.getParam(ros::this_node::getName() + "/invertY", invertY))
-        ROS_DEBUG("%s: Could not get parameter - using %b",
+        ROS_DEBUG("%s: Could not get parameter - using %i",
                 ros::this_node::getName().c_str(), invertY);
     ros::spin();
     return 0;

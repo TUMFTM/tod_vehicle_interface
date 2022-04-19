@@ -17,7 +17,6 @@
         </node>
 
         <node name="VehicleDataFromLGSVL" pkg="tod_lgsvl_bridge" type="VehicleDataFromLGSVL" output="screen">
-            <rosparam command="load" file="$(find tod_vehicle_config)/vehicle_config/lgsvl/vehicle-params.yaml" />
             <remap from="vehicle_data" to="/Vehicle/VehicleBridge/vehicle_data"/>
             <remap from="gps/fix" to="/Vehicle/VehicleBridge/gps/fix"/>
         </node>
@@ -29,7 +28,7 @@
 
         <node name="PointCloud2LaserScan" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node"
               output="screen">
-            <remap from="cloud_in" to="/Simulation/Lidar/LidarFront/point_cloud"/>
+            <remap from="cloud_in" to="/Simulation/Lidar/LidarFront"/>
             <remap from="scan" to="/Vehicle/Lidar/LidarFront/scan"/>
             <param name="min_height" value="-0.5"/>
             <param name="max_height" value="0.5"/>

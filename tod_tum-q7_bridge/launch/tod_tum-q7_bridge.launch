@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+<arg name="mode" default="none"/>
+
+<group ns="/Vehicle/VehicleBridge" if="$(eval mode == 'vehicle')">
+    <node name="VehicleDataFromAutobox" pkg="tod_tum-q7_bridge" type="VehicleDataFromAutobox" output="screen"/>
+    <node name="SafetyDriverStatusFromAutobox" pkg="tod_tum-q7_bridge" type="SafetyDriverStatusFromAutobox" output="screen"/>
+    <node name="ControlCommandToAutobox" pkg="tod_tum-q7_bridge" type="ControlCommandToAutobox" output="screen"/>
+</group>
+
+</launch>

@@ -8,10 +8,12 @@
 #include <tod_msgs/VehicleData.h>
 #include <tod_msgs/Status.h>
 #include "tod_helper/vehicle/Model.h"
+#include "tod_core/VehicleParameters.h"
 
 static float _swa = 0;
 static float _velocity = 0;
 static tod_msgs::VehicleData _vehDataMsg;
+std::unique_ptr<tod_core::VehicleParameters> _vehParams;
 static VehicleModel _vehModel;
 
 void handlePrimaryControl(const tod_msgs::PrimaryControlCmd& msg) {
@@ -51,18 +53,9 @@ int main(int argc, char **argv) {
     ros::Publisher vehDataPub = n.advertise<tod_msgs::VehicleData>("vehicle_data", 1);
     std::string nodeName = ros::this_node::getName();
 
-    // Load Parameters
-    float distance_rear_axle{0.0f};
-    float distance_front_axle{0.0f};
-    float max_steering_wheel_angle{0.0f};
-    float max_road_wheel_angle{0.0f};
-    if (!n.getParam(nodeName + "/distance_rear_axle", distance_rear_axle) ||
-        !n.getParam(nodeName + "/distance_front_axle", distance_front_axle) ||
-        !n.getParam(nodeName + "/maximum_road_wheel_angle", max_road_wheel_angle) ||
-        !n.getParam(nodeName + "/maximum_steering_wheel_angle", max_steering_wheel_angle)) {
-        ROS_ERROR("%s: Could not get Vehicle Parameters", nodeName.c_str());
-    }
-    _vehModel.setParams(distance_front_axle, distance_rear_axle, max_road_wheel_angle, max_steering_wheel_angle);
+    _vehParams = std::make_unique<tod_core::VehicleParameters>(n);
+    _vehModel.setParams(_vehParams->get_distance_front_axle(), _vehParams->get_distance_rear_axle(),
+         _vehParams->get_max_rwa_rad(), _vehParams->get_max_swa_rad());
 
     nav_msgs::Odometry base_odom, rear_odom;
     ros::Time prev = ros::Time::now();
@@ -70,6 +63,12 @@ int main(int argc, char **argv) {
     while (ros::ok()) {
         loop_rate.sleep();
         ros::spinOnce();
+
+        if (_vehParams->vehicle_id_has_changed()) {
+            _vehParams->load_parameters();
+            _vehModel.setParams(_vehParams->get_distance_front_axle(), _vehParams->get_distance_rear_axle(),
+                _vehParams->get_max_rwa_rad(), _vehParams->get_max_swa_rad());
+        }
         ros::Time curr = ros::Time::now();
         double dt_s = (curr-prev).toSec();
 
@@ -81,7 +80,7 @@ int main(int argc, char **argv) {
         _vehDataMsg.linearAcceleration.x = _vehModel.getAx();
         _vehDataMsg.linearAcceleration.y = _vehModel.getAy();
         _vehDataMsg.steeringWheelAngle = float(tod_helper::Vehicle::Model::rwa2swa(
-            _vehModel.getSteeringAngle(), max_steering_wheel_angle, max_road_wheel_angle));
+            _vehModel.getSteeringAngle(), _vehParams->get_max_swa_rad(), _vehParams->get_max_rwa_rad()));
         _vehDataMsg.header.stamp = ros::Time::now();
 
         // Publishing odometry
@@ -101,9 +100,9 @@ int main(int argc, char **argv) {
 
         rear_odom = base_odom;
         rear_odom.pose.pose.position.x = rear_odom.pose.pose.position.x
-                                         - distance_rear_axle * std::cos(_vehModel.getPsi());
+                                         - _vehParams->get_distance_rear_axle() * std::cos(_vehModel.getPsi());
         rear_odom.pose.pose.position.y = rear_odom.pose.pose.position.y
-                                         - distance_rear_axle * std::sin(_vehModel.getPsi());
+                                         - _vehParams->get_distance_rear_axle() * std::sin(_vehModel.getPsi());
         rear_odom.child_frame_id = "rear_axle_footprint";
         odomPub2.publish(rear_odom);
         odomPub.publish(base_odom);
