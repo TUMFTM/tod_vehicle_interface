@@ -2,7 +2,6 @@
 <launch>
     <arg name="isVehicle" default="false"/>
     <arg name="isOperator" default="false"/>
-    <arg name="vehicleID" default="tum-q7"/>
 
     <!--OPERATOR NODES-->
     <group ns="/Operator/VehicleBridge" if="$(eval isOperator)">
@@ -35,6 +34,7 @@
             <remap from="status_msg" to="/Vehicle/Manager/status_msg"/>
             <remap from="mux_output" to="/Vehicle/VehicleBridge/primary_control_cmd"/>
             <remap from="direct_control" to="/Vehicle/DirectControl/primary_control_cmd"/>
+            <remap from="safe_corridor_control" to="/Vehicle/SafeCorridorControl/primary_control_cmd"/>
         </node>
     </group>
 </launch>

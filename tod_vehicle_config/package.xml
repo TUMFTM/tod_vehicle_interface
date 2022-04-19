@@ -4,9 +4,9 @@
   <version>1.0.0</version>
   <description>The tod_vehicle_config package</description>
 
-  <maintainer email="feiler@ftm.mw.tum.de">Johannes Feiler</maintainer>
-  <maintainer email="hoffmann@ftm.mw.tum.de">Simon Hoffmann</maintainer>
-  <maintainer email="majstorovic@ftm.mw.tum.de">Domagoj Majstorovic</maintainer>
+  <maintainer email="johannes.feiler@tum.de">Johannes Feiler</maintainer>
+  <maintainer email="simon.hoffmann@tum.de">Simon Hoffmann</maintainer>
+  <maintainer email="domagoj.majstorovic@tum.de">Domagoj Majstorovic</maintainer>
   <maintainer email="andreas.schimpe@tum.de">Andreas Schimpe</maintainer>
 
   <license>LGPLv3</license>

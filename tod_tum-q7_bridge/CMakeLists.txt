@@ -1,30 +1,23 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(tod_lgsvl_bridge)
+project(tod_tum-q7_bridge)
 
-add_compile_options(-std=c++17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+add_compile_options(-std=c++17)
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
-    std_msgs
-    tod_msgs
-    lgsvl_msgs
-    tod_network
-    autoware_msgs
-    tod_vehicle_config
+    nav_msgs
     tf2
     tf2_ros
-    tod_core
-)
-catkin_package(
-    INCLUDE_DIRS #include
-    CATKIN_DEPENDS roscpp tod_msgs lgsvl_msgs tod_vehicle_config
+    tod_msgs
+    tod_network
+    tod_helper
     )
 
-include_directories(
-    ${catkin_INCLUDE_DIRS}
-    ../../devel/include
-)
+catkin_package(
+    # INCLUDE_DIRS
+    CATKIN_DEPENDS roscpp nav_msgs tf2 tf2_ros tod_msgs tod_network tod_helper
+    )
 
 option(VEHICLE "Build vehicle targets" ON)
 if (${VEHICLE})
@@ -33,7 +26,7 @@ else()
     message("skipping ${PROJECT_NAME} vehicle targets")
 endif()
 
-install(DIRECTORY 
+install(DIRECTORY
     launch
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+    )

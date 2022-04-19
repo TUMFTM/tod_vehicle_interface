@@ -1,5 +1,5 @@
 lidar0:
-  name: /laser_model
+  name: /laser
   is_3D: false
   construct_gridmap_from: true
   detect_on: true
