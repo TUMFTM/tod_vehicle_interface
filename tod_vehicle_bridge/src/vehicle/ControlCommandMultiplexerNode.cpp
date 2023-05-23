@@ -10,10 +10,17 @@ ros::Publisher _pubControlMsg;
 
 bool inTeleoperationStatus() { return _todStatus == tod_msgs::Status::TOD_STATUS_TELEOPERATION; }
 bool inDirectControlMode() { return _ctrlMode == tod_msgs::Status::CONTROL_MODE_DIRECT; }
+bool inSharedControlMode() { return _ctrlMode == tod_msgs::Status::CONTROL_MODE_SHARED; }
 bool inSafeCorridorControlMode() { return _ctrlMode == tod_msgs::Status::CONTROL_MODE_SAFECORRIDOR; }
 
 void callback_direct_control(const tod_msgs::PrimaryControlCmd& msg) {
     if ( inDirectControlMode() ) {
+        _pubControlMsg.publish(msg);
+    }
+}
+
+void callback_shared_control(const tod_msgs::PrimaryControlCmd& msg) {
+    if ( inSharedControlMode() ) {
         _pubControlMsg.publish(msg);
     }
 }
@@ -37,7 +44,10 @@ int main(int argc, char **argv) {
     listOfSubscribers.push_back(nodeHandle.subscribe(
         "direct_control", 1, callback_direct_control));
     listOfSubscribers.push_back(nodeHandle.subscribe(
+        "shared_control", 1, callback_shared_control));
+    listOfSubscribers.push_back(nodeHandle.subscribe(
         "safe_corridor_control", 1, callback_safe_corridor_control));
+
     _pubControlMsg = nodeHandle.advertise<tod_msgs::PrimaryControlCmd>("mux_output", 1);
     ros::spin();
     return 0;
